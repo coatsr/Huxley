@@ -8,13 +8,13 @@
 
 ## UK National Rail Live Departure Boards JSON proxy
 
-Huxley is a [CORS](http://enable-cors.org/) enabled JSON proxy for the UK National Rail Enquires Live Departure Board [SOAP](http://harmful.cat-v.org/software/xml/soap/simple) [API](http://www.nationalrail.co.uk/46391.aspx) (Darwin). 
+Huxley is a [CORS](http://enable-cors.org/) enabled JSON proxy for the UK National Rail Enquires Live Departure Board [SOAP](http://harmful.cat-v.org/software/xml/soap/simple) [API](http://www.nationalrail.co.uk/46391.aspx) (Darwin), including the staff version. 
 It aims to make the API available to many more tools on multiple platforms. You no longer need .NET on Windows to use Darwin.
 
 [![Tech arch](https://raw.githubusercontent.com/jpsingleton/Huxley/master/HuxleyTechArch.png)](https://huxley.unop.uk)
 
 If you want to be informed of updates when they are released then watch the project on GitHub and **follow [me on Twitter](https://twitter.com/shutdownscanner)**. You can also read about this and other projects on [my blog](https://unop.uk/). 
-If you are interested in cross-platform .NET then you may enjoy reading [my new book, "ASP.NET Core 1.0 High Performance"](https://unop.uk/book/).
+If you are interested in cross-platform .NET then you may enjoy reading [my book, "ASP.NET Core 2 High Performance"](https://unop.uk/book/).
 
 ---
 
@@ -135,7 +135,7 @@ Filter stations can be a comma separated list. Filter type and number of rows ar
 
 ### Service
 
-[`/service/{Service ID}?accessToken={Your GUID token}`](https://huxley.apphb.com/service/Z/zlpIG8jJacKayAnOXODw==?accessToken=)
+[`/service/{Service ID}`](https://huxley.apphb.com/service/Z/zlpIG8jJacKayAnOXODw==?accessToken=)
 
 The service ID can be found for each service inside the departures and arrivals response. 
 Huxley also returns the ID in URL percent encoded, GUID and [URL safe Base64](https://en.wikipedia.org/wiki/Base64#URL_applications) representations (for non-staff boards).
@@ -150,10 +150,12 @@ If the ID is a RID (a 15 digit long integer) then the staff API will be used. In
 
 The **delays** action performs calculations server side to easily let you know if there are problems on a particular route.
 
-[`/delays/{CRS|StationName}/{filterType}/{filterCRS|StationName}/{numRows}?accessToken={Your GUID token}`](https://huxley.apphb.com/delays/clapham junction/from/london/20?accessToken=)
+[`/delays/{CRS|StationName}/{filterType}/{filterCRS|StationName}/{numRows}`](https://huxley.apphb.com/delays/clapham%20junction/from/london/20?accessToken=DA1C7740-9DA0-11E4-80E6-A920340000B1)
+
+`numRows` is mandatory
 
 **Sample Response:**
-```javascript
+```json
 {
   "generatedAt": "2015-05-08T11:28:33.7187169+01:00",
   "locationName": "Clapham Junction",
@@ -214,7 +216,7 @@ CRS (Computer Reservation System) station codes are available from the following
 If `query` is omitted then all CRS codes are returned along with their respective station names. If `query` is provided then only station names matching it will be returned along with their CRS codes.
 
 Example response for `/crs/oswald`:
-```javascript
+```json
 [
   {
     "stationName": "Church & Oswaldtwistle",
